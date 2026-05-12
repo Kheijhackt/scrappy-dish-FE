@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@/constants/config";
-import * as apiHelper from "./apiHelper";
-import * as authStore from "./authStore";
+import * as apiHelper from "../utils/apiHelper";
+import * as authStore from "../utils/authStore";
 
 export async function verifyMe(): Promise<boolean> {
   let result = false;
