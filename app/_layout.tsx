@@ -30,9 +30,9 @@ export default function RootLayout() {
 
     const inTabsGroup = segments[0] === "(tabs)";
     if (!isAuthenticated && inTabsGroup) {
-      router.replace("/(auth)/googleAuth");
+      router.replace("/googleAuth");
     } else if (isAuthenticated && !inTabsGroup) {
-      router.replace("/(tabs)/home");
+      router.replace("/home");
     }
   }, [isAuthenticated, isLoading]);
 
@@ -43,7 +43,7 @@ export default function RootLayout() {
       {isAuthenticated ? (
         <Stack.Screen name="(tabs)" />
       ) : (
-        <Stack.Screen name="(auth)/googleAuth" />
+        <Stack.Screen name="(auth)" />
       )}
     </Stack>
   );
