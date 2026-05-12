@@ -5,9 +5,7 @@ import * as authStore from "../utils/authStore";
 export async function verifyMe(): Promise<boolean> {
   let result = false;
   const token = await authStore.getToken();
-  if (!token) {
-    return result;
-  }
+  if (!token) return false;
 
   const response = await apiHelper.fetchEndpoint(
     "GET",
@@ -23,7 +21,7 @@ export async function googleAuth(id_token: string): Promise<boolean> {
   const response = await apiHelper.fetchEndpoint(
     "POST",
     API_ENDPOINTS.AUTH_GOOGLE,
-    { id_token },
+    { id_token: id_token },
   );
 
   if (response.status === 200) {
@@ -34,10 +32,19 @@ export async function googleAuth(id_token: string): Promise<boolean> {
   return result;
 }
 
-export async function logout(): Promise<boolean> {
+export async function logout({ logoutAll = false }): Promise<boolean> {
   let result = false;
-  const response = await apiHelper.fetchEndpoint("GET", API_ENDPOINTS.LOGOUT);
-  result = response.status === 200 ? true : false;
+  let response = null;
+
+  if (logoutAll) {
+    response = await apiHelper.fetchEndpoint(
+      "DELETE",
+      API_ENDPOINTS.LOGOUT_ALL,
+    );
+  } else {
+    response = await apiHelper.fetchEndpoint("DELETE", API_ENDPOINTS.LOGOUT);
+  }
+  result = response?.status === 200 ? true : false;
 
   if (result) {
     await authStore.deleteToken();

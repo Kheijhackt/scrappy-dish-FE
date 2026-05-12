@@ -50,7 +50,18 @@ describe("authEndpoints logic", () => {
     test("should delete token only if API logout is successful", async () => {
       (apiHelper.fetchEndpoint as jest.Mock).mockResolvedValue({ status: 200 });
 
-      const result = await logout();
+      const result = await logout({ logoutAll: false });
+
+      expect(result).toBe(true);
+      expect(authStore.deleteToken).toHaveBeenCalled();
+    });
+  });
+
+  describe("logoutAll", () => {
+    test("shuold delete token only if API logoutAll is successful", async () => {
+      (apiHelper.fetchEndpoint as jest.Mock).mockResolvedValue({ status: 200 });
+
+      const result = await logout({ logoutAll: true });
 
       expect(result).toBe(true);
       expect(authStore.deleteToken).toHaveBeenCalled();

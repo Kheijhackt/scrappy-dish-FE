@@ -22,8 +22,11 @@ export async function fetchEndpoint(
   try {
     const response = await axios(config);
     return response.data;
-  } catch (error) {
-    console.error(`Error with ${method} request to ${relativePath}:`, error);
-    return null;
+  } catch (error: any) {
+    if (error.response?.status === 401) {
+      console.warn("Session expired. Logging out...");
+      await authStore.deleteToken();
+    }
+    throw error;
   }
 }
