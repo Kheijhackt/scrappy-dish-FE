@@ -1,6 +1,6 @@
+import * as authEndpoints from "@/services/authEndpoints";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
-import * as authEndpoints from "../services/authEndpoints";
 import * as authStore from "../utils/authStore";
 
 export default function RootLayout() {
