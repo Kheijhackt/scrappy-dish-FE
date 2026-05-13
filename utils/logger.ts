@@ -14,22 +14,22 @@ export function logger(
 ) {
   if (!isDebugMode || !data) return;
 
-  const finalData = `[${caller}] : ${data}`;
+  const prefix = `[${caller}] :`;
 
   switch (level) {
     case LogLevel.INFO:
-      console.info(finalData);
+      console.info(prefix, data);
       break;
     case LogLevel.WARN:
-      console.warn(finalData);
+      console.warn(prefix, data);
       break;
     case LogLevel.ERROR:
-      console.error(finalData);
+      console.error(prefix, data);
       break;
     case LogLevel.LOG:
-      console.log(finalData);
+      console.log(prefix, data);
       break;
     default:
-      console.log(finalData);
+      console.log(prefix, data);
   }
 }

@@ -8,6 +8,7 @@ export async function fetchEndpoint(
   relativePath: string,
   data: any = null,
 ): Promise<any> {
+  const fName = fetchEndpoint.name;
   const token = await authStore.getToken();
 
   const config = {
@@ -15,20 +16,22 @@ export async function fetchEndpoint(
     url: `${API_CONFIG.BASE_URL}/api${relativePath}`,
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     data: data,
   };
 
   try {
     const response = await axios(config);
-    logger(fetchEndpoint.name, response);
-    return response.data;
+    logger(fName, response.data);
+    return response;
   } catch (error: any) {
-    if (error.response?.status === 401) {
-      logger(error.response, LogLevel.WARN);
-      await authStore.deleteToken();
+    if (error.response) {
+      logger(fName, error.response.status, LogLevel.WARN);
+      if (error.response.status === 401) {
+        await authStore.deleteToken();
+      }
+      return error.response;
     }
-    throw error;
   }
 }
