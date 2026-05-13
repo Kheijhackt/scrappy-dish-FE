@@ -7,14 +7,13 @@ export async function getUser(): Promise<User | null> {
   let result = null;
 
   const response = await apiHelper.fetchEndpoint("GET", API_ENDPOINTS.USER);
-  if (response.status === 200) {
+  if (response) {
     result = {
-      id: response.data.id,
-      name: response.data.name,
-      avatar: response.data.avatar,
+      id: response.data.data.id,
+      name: response.data.data.name,
+      avatar: response.data.data.avatar,
     };
   }
-
   return result;
 }
 
