@@ -1,6 +1,7 @@
 import axios, { Method } from "axios";
 import { API_CONFIG } from "../constants/config";
 import * as authStore from "./authStore";
+import { logger, LogLevel } from "./logger";
 
 export async function fetchEndpoint(
   method: Method,
@@ -21,10 +22,11 @@ export async function fetchEndpoint(
 
   try {
     const response = await axios(config);
+    logger(fetchEndpoint.name, response);
     return response.data;
   } catch (error: any) {
     if (error.response?.status === 401) {
-      console.warn("Session expired. Logging out...");
+      logger(error.response, LogLevel.WARN);
       await authStore.deleteToken();
     }
     throw error;
