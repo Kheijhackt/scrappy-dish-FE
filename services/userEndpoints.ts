@@ -27,9 +27,9 @@ export async function updateUser(user: Partial<User>): Promise<User | null> {
   );
   if (response.status === 200) {
     result = {
-      id: response.data.id,
-      name: response.data.name,
-      avatar: response.data.avatar,
+      id: response.data.data.id,
+      name: response.data.data.name,
+      avatar: response.data.data.avatar,
     };
   }
 
