@@ -18,6 +18,9 @@ export const API_ENDPOINTS = {
 
   USER: "/user",
 
+  SUGGEST_SINGLE: "/recipes/suggest-single",
+  SUGGEST_MULTIPLE: "/recipes/suggest-multiple",
+
   RECIPE_SAVE: "/recipes/save",
   RECIPE: (id: number) => `/recipes/${id}`,
   RECIPES: (page: number, per_page: number) =>
