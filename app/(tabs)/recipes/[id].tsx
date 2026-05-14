@@ -1,8 +1,8 @@
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 
 export default function DetailedRecipeScreen() {
   const { id } = useLocalSearchParams();
@@ -19,6 +19,13 @@ export default function DetailedRecipeScreen() {
     loadRecipe();
   }, []);
 
+  const deleteRecipe = async (id: number) => {
+    const response = await recipeEndpoints.deleteRecipe(id);
+    if (response) {
+      router.back();
+    }
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Detailed Recipe Screen for ID: {id}</Text>
@@ -33,6 +40,7 @@ export default function DetailedRecipeScreen() {
       <Text>{recipe?.dish_tags[0]}</Text>
       <Text>{recipe?.general_tags[0]}</Text>
       <Text>{recipe?.nutrition_notes}</Text>
+      <Button title="Delete recipe" onPress={() => deleteRecipe(recipeId)} />
     </View>
   );
 }

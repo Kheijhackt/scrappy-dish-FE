@@ -48,3 +48,18 @@ export async function loadOneRecipe(id: number): Promise<Recipe | null> {
 
   return result;
 }
+
+export async function deleteRecipe(id: number): Promise<boolean> {
+  let result = false;
+
+  const response = await apiHelper.fetchEndpoint(
+    "DELETE",
+    API_ENDPOINTS.RECIPE(id),
+  );
+
+  if (response) {
+    result = true;
+  }
+
+  return result;
+}

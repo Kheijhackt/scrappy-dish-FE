@@ -1,19 +1,21 @@
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 
 export default function RecipesScreen() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
-  useEffect(() => {
-    const getSummaryRecipes = async () => {
-      const response = await recipeEndpoints.loadSummaryRecipes(1, 15);
-      setRecipes(response);
-    };
-    getSummaryRecipes();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const getSummaryRecipes = async () => {
+        const response = await recipeEndpoints.loadSummaryRecipes(1, 15);
+        setRecipes(response);
+      };
+      getSummaryRecipes();
+    }, []),
+  );
 
   const openRecipe = (recipeId: number) => {
     router.push(`/recipes/${recipeId}`);
