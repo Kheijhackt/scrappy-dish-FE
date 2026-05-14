@@ -1,7 +1,8 @@
+import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -12,7 +13,13 @@ export default function HomeScreen() {
       setRecipe(response);
     };
     suggestRecipe();
-  });
+  }, []);
+
+  const saveRecipe = async () => {
+    if (recipe) {
+      const response = await recipeEndpoints.saveRecipe(recipe);
+    }
+  };
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Home Screen</Text>
@@ -27,6 +34,8 @@ export default function HomeScreen() {
       <Text>{recipe?.dishTags[0]}</Text>
       <Text>{recipe?.generalTags[0]}</Text>
       <Text>{recipe?.nutritionNotes}</Text>
+
+      <Button title="Save recipe" onPress={saveRecipe} />
     </View>
   );
 }

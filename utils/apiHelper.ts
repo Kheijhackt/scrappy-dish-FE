@@ -27,7 +27,7 @@ export async function fetchEndpoint(
     return response;
   } catch (error: any) {
     if (error.response) {
-      logger(fName, error.response.status, LogLevel.WARN);
+      logger(fName, JSON.stringify(error.response, null, 2), LogLevel.WARN);
       if (error.response.status === 401) {
         await authStore.deleteToken();
       }
