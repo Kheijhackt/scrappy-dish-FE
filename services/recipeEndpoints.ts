@@ -27,5 +27,9 @@ export async function loadSummaryRecipes(
     API_ENDPOINTS.RECIPES(pageNumber, perPage),
   );
 
+  if (response) {
+    result = response.data.data.recipes;
+  }
+
   return result;
 }
