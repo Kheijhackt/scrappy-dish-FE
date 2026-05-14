@@ -23,7 +23,7 @@ export async function fetchEndpoint(
 
   try {
     const response = await axios(config);
-    logger(fName, response.data);
+    logger(fName, JSON.stringify(response.data, null, 2));
     return response;
   } catch (error: any) {
     if (error.response) {

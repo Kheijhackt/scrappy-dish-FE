@@ -1,7 +1,8 @@
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { Button, FlatList, Text, View } from "react-native";
 
 export default function RecipesScreen() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
@@ -13,6 +14,10 @@ export default function RecipesScreen() {
     };
     getSummaryRecipes();
   }, []);
+
+  const openRecipe = (recipeId: number) => {
+    router.push(`/recipes/${recipeId}`);
+  };
 
   const Item = ({
     title,
@@ -27,6 +32,7 @@ export default function RecipesScreen() {
       <Text>{id}</Text>
       <Text>{title}</Text>
       <Text>{description}</Text>
+      <Button title="Open" onPress={() => openRecipe(id ?? 0)} />
     </View>
   );
 

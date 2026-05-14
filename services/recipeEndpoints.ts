@@ -33,3 +33,18 @@ export async function loadSummaryRecipes(
 
   return result;
 }
+
+export async function loadOneRecipe(id: number): Promise<Recipe | null> {
+  let result = null;
+
+  const response = await apiHelper.fetchEndpoint(
+    "GET",
+    API_ENDPOINTS.RECIPE(id),
+  );
+
+  if (response) {
+    result = response.data.data;
+  }
+
+  return result;
+}
