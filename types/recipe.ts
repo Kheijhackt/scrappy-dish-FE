@@ -2,13 +2,13 @@ export interface Recipe {
   id: number | null;
   title: string;
   description: string;
-  ingredientsUsed: string[];
+  ingredients_used: string[];
   steps: string[];
-  cookTimeMinutes: number;
+  cook_time_minutes: number;
   difficulty: number;
   servings: number;
-  cuisineTags: string[];
-  dishTags: string[];
-  generalTags: string[];
-  nutritionNotes: string;
+  cuisine_tags: string[];
+  dish_tags: string[];
+  general_tags: string[];
+  nutrition_notes: string;
 }

@@ -25,15 +25,15 @@ export default function HomeScreen() {
       <Text>Home Screen</Text>
       <Text>{recipe?.title}</Text>
       <Text>{recipe?.description}</Text>
-      <Text>{recipe?.ingredientsUsed[0]}</Text>
+      <Text>{recipe?.ingredients_used[0]}</Text>
       <Text>{recipe?.steps[0]}</Text>
-      <Text>{recipe?.cookTimeMinutes}</Text>
+      <Text>{recipe?.cook_time_minutes}</Text>
       <Text>{recipe?.difficulty}</Text>
       <Text>{recipe?.servings}</Text>
-      <Text>{recipe?.cuisineTags[0]}</Text>
-      <Text>{recipe?.dishTags[0]}</Text>
-      <Text>{recipe?.generalTags[0]}</Text>
-      <Text>{recipe?.nutritionNotes}</Text>
+      <Text>{recipe?.cuisine_tags[0]}</Text>
+      <Text>{recipe?.dish_tags[0]}</Text>
+      <Text>{recipe?.general_tags[0]}</Text>
+      <Text>{recipe?.nutrition_notes}</Text>
 
       <Button title="Save recipe" onPress={saveRecipe} />
     </View>
