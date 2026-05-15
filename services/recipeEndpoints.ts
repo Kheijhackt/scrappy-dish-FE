@@ -4,6 +4,7 @@ import * as apiHelper from "../utils/apiHelper";
 
 export async function saveRecipe(recipe: Recipe | null): Promise<boolean> {
   let result = false;
+  if (!recipe) return result;
 
   const response = await apiHelper.fetchEndpoint(
     "POST",

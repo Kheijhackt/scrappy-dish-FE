@@ -1,6 +1,6 @@
 export interface RecipeRequest {
-  cookTimeMinutes: number;
+  cook_time_minutes: number;
   difficulty: number;
   servings: number;
-  additionalInstructions: string;
+  additional_instructions: string;
 }
