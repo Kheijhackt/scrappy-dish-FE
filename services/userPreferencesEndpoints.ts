@@ -22,3 +22,27 @@ export async function getUserPreferences(): Promise<UserPreferences | null> {
 
   return result;
 }
+
+export async function updateUserPreferences(
+  userPreferences: Partial<UserPreferences>,
+): Promise<UserPreferences | null> {
+  let result = null;
+
+  const response = await apiHelper.fetchEndpoint(
+    "PATCH",
+    API_ENDPOINTS.USER_PREFERENCES,
+    userPreferences,
+  );
+
+  if (response) {
+    result = {
+      available_ingredients: response.data.data.available_ingredients,
+      dietary_preferences: response.data.data.dietary_preferences,
+      cuisine_preferences: response.data.data.cuisine_preferences,
+      dish_preferences: response.data.data.dish_preferences,
+      available_equipments: response.data.data.available_equipments,
+    };
+  }
+
+  return result;
+}
