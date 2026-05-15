@@ -18,6 +18,8 @@ export const API_ENDPOINTS = {
 
   USER: "/user",
 
+  USER_PREFERENCES: "/user-preferences",
+
   SUGGEST_SINGLE: "/recipes/suggest-single",
   SUGGEST_MULTIPLE: "/recipes/suggest-multiple",
 
