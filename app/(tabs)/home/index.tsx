@@ -2,7 +2,8 @@ import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
 import { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button } from "react-native";
+import { Text, View } from "tamagui";
 
 export default function HomeScreen() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);

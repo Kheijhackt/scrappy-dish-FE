@@ -1,6 +1,8 @@
 import * as authEndpoints from "@/services/authEndpoints";
+import { config } from "@/tamagui.config";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
+import { TamaguiProvider } from "tamagui";
 import * as authStore from "../utils/authStore";
 
 export default function RootLayout() {
@@ -39,12 +41,14 @@ export default function RootLayout() {
   if (isLoading) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      {isAuthenticated ? (
-        <Stack.Screen name="(tabs)" />
-      ) : (
-        <Stack.Screen name="(auth)" />
-      )}
-    </Stack>
+    <TamaguiProvider config={config} defaultTheme="light">
+      <Stack screenOptions={{ headerShown: false }}>
+        {isAuthenticated ? (
+          <Stack.Screen name="(tabs)" />
+        ) : (
+          <Stack.Screen name="(auth)" />
+        )}
+      </Stack>
+    </TamaguiProvider>
   );
 }
