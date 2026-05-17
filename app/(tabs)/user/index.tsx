@@ -1,3 +1,4 @@
+import Loading from "@/components/ui/Loading";
 import * as userEndpoints from "@/services/userEndpoints";
 import * as userPreferencesEndpoints from "@/services/userPreferencesEndpoints";
 import { User } from "@/types/user";
@@ -20,6 +21,7 @@ import {
 export default function UserScreen() {
   const [user, setUser] = useState<User | null>(null);
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fully controlled accordion state - empty array keeps everything closed by default
   const [openSections, setOpenSections] = useState<string[]>([]);
@@ -35,12 +37,14 @@ export default function UserScreen() {
 
   // Fetch profiles and configuration tokens on screen focus
   const loadUserData = useCallback(async () => {
+    setIsLoading(true);
     const [userData, prefData] = await Promise.all([
       userEndpoints.getUser(),
       userPreferencesEndpoints.getUserPreferences(),
     ]);
     if (userData) setUser(userData);
     if (prefData) setPreferences(prefData);
+    setIsLoading(false);
   }, []);
 
   useFocusEffect(
@@ -82,15 +86,18 @@ export default function UserScreen() {
 
   // Dispatches local modifications to the backend endpoint
   const saveAllPreferences = async () => {
+    setIsLoading(true);
     if (preferences) {
       await userPreferencesEndpoints.updateUserPreferences(preferences);
       const dynamicUpdate = await userPreferencesEndpoints.getUserPreferences();
       if (dynamicUpdate) setPreferences(dynamicUpdate);
     }
+    setIsLoading(false);
   };
 
   // Discards local changes by pulling down the original server data again
   const discardAllChanges = async () => {
+    setIsLoading(true);
     const prefData = await userPreferencesEndpoints.getUserPreferences();
     if (prefData) setPreferences(prefData);
 
@@ -102,6 +109,8 @@ export default function UserScreen() {
       dish_preferences: "",
       available_equipments: "",
     });
+
+    setIsLoading(false);
   };
 
   const handleSettingsPress = () => {
@@ -119,6 +128,7 @@ export default function UserScreen() {
   return (
     <ScrollView backgroundColor="$background" flex={1}>
       <YStack padding="$4" gap="$5">
+        <Loading isLoading={isLoading} />
         {/* Upper Profile Layout Section */}
         <XStack justifyContent="space-between" alignItems="center" width="100%">
           <YStack gap="$1" flex={1}>

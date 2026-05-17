@@ -17,22 +17,28 @@ export default function DetailedRecipeScreen() {
   const { id } = useLocalSearchParams();
   const recipeId = Number(id);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadRecipe = async () => {
+      setLoading(true);
       const response = await recipeEndpoints.loadOneRecipe(recipeId);
       if (response) {
         setRecipe(response);
       }
+      setLoading(false);
     };
     loadRecipe();
   }, [recipeId]);
 
   const deleteRecipe = async (id: number) => {
+    setLoading(true);
     const response = await recipeEndpoints.deleteRecipe(id);
     if (response) {
       router.back();
     }
+
+    setLoading(false);
   };
 
   return (

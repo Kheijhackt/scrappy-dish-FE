@@ -1,3 +1,4 @@
+import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
@@ -15,26 +16,32 @@ import {
 
 export default function HomeScreen() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const suggestRecipe = async () => {
+      setLoading(true);
       const response = await suggestEndpoints.getOneRecipe();
       setRecipe(response);
+      setLoading(false);
     };
     suggestRecipe();
   }, []);
 
   const saveRecipe = async () => {
+    setLoading(true);
     if (recipe) {
       await recipeEndpoints.saveRecipe(recipe);
     }
+    setLoading(false);
   };
 
   return (
     <ScrollView backgroundColor="$background" flex={1}>
       <YStack padding="$4" gap="$4" flex={1} justifyContent="center">
+        <Loading isLoading={loading} />
         <Heading size="$7" textAlign="center" color="$color" marginBottom="$1">
-          Daily Suggestion
+          Recipe You Might Like
         </Heading>
 
         {recipe ? (
@@ -233,17 +240,7 @@ export default function HomeScreen() {
               </SizableText>
             </Button>
           </YStack>
-        ) : (
-          <Paragraph
-            size="$4"
-            textAlign="center"
-            color="$color"
-            opacity={0.4}
-            marginTop="$8"
-          >
-            Looking for a great recipe...
-          </Paragraph>
-        )}
+        ) : null}
       </YStack>
     </ScrollView>
   );

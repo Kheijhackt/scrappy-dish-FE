@@ -1,3 +1,4 @@
+import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
@@ -24,6 +25,7 @@ export default function SuggestScreen() {
     null,
   );
   const [isSheetOpen, setIsSheetOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Accordion open/close state tracking
   const [openRecipes, setOpenRecipes] = useState<string[]>([]);
@@ -35,6 +37,7 @@ export default function SuggestScreen() {
   const [instructions, setInstructions] = useState("I want it yummy.");
 
   const suggestMultipleRecipes = async () => {
+    setLoading(true);
     const payload: RecipeRequest = {
       cook_time_minutes: cookTime,
       difficulty: difficulty,
@@ -51,10 +54,14 @@ export default function SuggestScreen() {
       // Reset expanded accordions back to defaults on fresh fetches
       setOpenRecipes([]);
     }
+
+    setLoading(false);
   };
 
   const saveRecipe = async (recipe: Recipe) => {
+    setLoading(true);
     await recipeEndpoints.saveRecipe(recipe);
+    setLoading(false);
   };
 
   // Clamps adjustable parameters between a safe lower and optional upper boundary
@@ -72,9 +79,7 @@ export default function SuggestScreen() {
     <View backgroundColor="$background" flex={1} position="relative">
       {/* Primary Canvas Container */}
       <YStack padding="$4" flex={1}>
-        <Heading size="$7" color="$color" textAlign="center" marginBottom="$4">
-          Suggestions
-        </Heading>
+        <Loading isLoading={loading} />
 
         {suggestedRecipes ? (
           <Accordion

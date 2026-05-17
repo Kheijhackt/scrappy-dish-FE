@@ -12,14 +12,19 @@ import {
   YStack,
 } from "tamagui";
 
+import Loading from "@/components/ui/Loading";
+
 export default function RecipesScreen() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
       const getSummaryRecipes = async () => {
+        setLoading(true);
         const response = await recipeEndpoints.loadSummaryRecipes(1, 15);
         setRecipes(response);
+        setLoading(false);
       };
       getSummaryRecipes();
     }, []),
@@ -85,6 +90,7 @@ export default function RecipesScreen() {
       paddingHorizontal="$4"
       paddingTop="$4"
     >
+      <Loading isLoading={loading} />
       <FlatList
         data={recipes}
         renderItem={(x) => (
