@@ -3,7 +3,7 @@ import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
-import { Trash } from "@tamagui/lucide-icons-2";
+import { ChevronLeft, Trash } from "@tamagui/lucide-icons-2";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -59,6 +59,13 @@ export default function DetailedRecipeScreen() {
             button1Callback={() => setShowDialog(false)}
             button2Name="Delete"
             button2Callback={() => deleteRecipe(recipeId)}
+          />
+          <Button
+            name="Back"
+            onPress={() => router.back()}
+            variant="outline"
+            icon={<ChevronLeft />}
+            width="25%"
           />
           {recipe ? (
             <YStack gap="$4">
