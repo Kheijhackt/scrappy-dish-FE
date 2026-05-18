@@ -15,11 +15,15 @@ interface DialogProps {
 export default function Dialog({
   isShowing,
   title = "Notice",
-  description,
+  description = "This is notified",
   button1Name,
-  button1Callback,
+  button1Callback = () => {
+    console.log("button1Callback");
+  },
   button2Name,
-  button2Callback,
+  button2Callback = () => {
+    console.log("button2Callback");
+  },
   onClose,
 }: DialogProps) {
   const handleOpenChange = (open: boolean) => {

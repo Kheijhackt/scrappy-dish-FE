@@ -12,8 +12,8 @@ import {
 
 interface RecipeAccordionProps {
   recipe: Recipe;
-  index?: number; // Optional index fallback to safely generate distinct layout values
-  onSave?: (recipe: Recipe) => void | Promise<void>; // Event callback bound to parent persistence actions
+  index?: number;
+  onSave?: (recipe: Recipe) => void | Promise<void>;
 }
 
 export default function RecipeAccordion({
@@ -94,7 +94,7 @@ export default function RecipeAccordion({
                 paddingVertical="$0.5"
                 borderRadius="$2"
               >
-                👥 {recipe?.servings} portions
+                👥 {recipe?.servings} servings
               </SizableText>
             </XStack>
           </YStack>
@@ -150,34 +150,39 @@ export default function RecipeAccordion({
           )}
         </YStack>
 
-        {/* Descriptive Tag Categorization Stack */}
-        <YStack
-          gap="$2"
-          borderWidth={1}
-          borderColor="$borderColor"
-          padding="$3"
-          borderRadius="$3"
-          backgroundColor="$backgroundHover"
-        >
-          <XStack gap="$2" flexWrap="wrap">
-            <SizableText size="$2" color="$color">
-              <SizableText fontWeight="700">Cuisine:</SizableText>{" "}
-              {recipe?.cuisine_tags?.join(", ") || "General"}
+        {/* FIX: Combined Metadata Hashtags (Cuisine, Dish, & Tags all on one line) */}
+        <XStack gap="$2" flexWrap="wrap" marginTop="$1">
+          {recipe?.cuisine_tags?.map((tag, index) => (
+            <SizableText
+              key={`cuisine-${index}`}
+              size="$2"
+              color="$accentColor"
+              opacity={0.8}
+            >
+              #{tag}
             </SizableText>
-          </XStack>
-          <XStack gap="$2" flexWrap="wrap">
-            <SizableText size="$2" color="$color">
-              <SizableText fontWeight="700">Dish:</SizableText>{" "}
-              {recipe?.dish_tags?.join(", ") || "Standard"}
+          ))}
+          {recipe?.dish_tags?.map((tag, index) => (
+            <SizableText
+              key={`dish-${index}`}
+              size="$2"
+              color="$accentColor"
+              opacity={0.8}
+            >
+              #{tag}
             </SizableText>
-          </XStack>
-          <XStack gap="$2" flexWrap="wrap">
-            <SizableText size="$2" color="$color">
-              <SizableText fontWeight="700">Tags:</SizableText>{" "}
-              {recipe?.general_tags?.join(", ") || "None"}
+          ))}
+          {recipe?.general_tags?.map((tag, index) => (
+            <SizableText
+              key={`general-${index}`}
+              size="$2"
+              color="$accentColor"
+              opacity={0.8}
+            >
+              #{tag}
             </SizableText>
-          </XStack>
-        </YStack>
+          ))}
+        </XStack>
 
         {/* Nutrition Metadata Column */}
         {recipe?.nutrition_notes ? (
@@ -196,7 +201,7 @@ export default function RecipeAccordion({
           </YStack>
         ) : null}
 
-        {/* Local Persistence Action Trigger (Only rendered if onSave function is supplied) */}
+        {/* Local Persistence Action Trigger */}
         {onSave && (
           <Button
             backgroundColor="$accentBackground"
@@ -205,7 +210,7 @@ export default function RecipeAccordion({
             hoverStyle={{ opacity: 0.9, scale: 0.98 }}
             pressStyle={{ opacity: 0.8, scale: 0.95 }}
           >
-            <SizableText fontWeight="700" color="$background">
+            <SizableText fontWeight="700" color="$accent12">
               Save This Recipe
             </SizableText>
           </Button>
