@@ -41,7 +41,7 @@ export default function RootLayout() {
   if (isLoading) return null;
 
   return (
-    <TamaguiProvider config={config} defaultTheme="light">
+    <TamaguiProvider config={config} defaultTheme="dark">
       <Stack screenOptions={{ headerShown: false }}>
         {isAuthenticated ? (
           <Stack.Screen name="(tabs)" />

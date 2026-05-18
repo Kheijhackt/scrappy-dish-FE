@@ -1,14 +1,15 @@
 import { Recipe } from "@/types/recipe";
+import { Save } from "@tamagui/lucide-icons-2";
 import React from "react";
 import {
   Accordion,
-  Button,
   Heading,
   Paragraph,
   SizableText,
   XStack,
   YStack,
 } from "tamagui";
+import Button from "./Button";
 
 interface RecipeAccordionProps {
   recipe: Recipe;
@@ -204,16 +205,10 @@ export default function RecipeAccordion({
         {/* Local Persistence Action Trigger */}
         {onSave && (
           <Button
-            backgroundColor="$accentBackground"
-            marginTop="$2"
+            name="Save Recipe"
             onPress={() => onSave(recipe)}
-            hoverStyle={{ opacity: 0.9, scale: 0.98 }}
-            pressStyle={{ opacity: 0.8, scale: 0.95 }}
-          >
-            <SizableText fontWeight="700" color="$accent12">
-              Save This Recipe
-            </SizableText>
-          </Button>
+            icon={<Save />}
+          />
         )}
       </Accordion.Content>
     </Accordion.Item>

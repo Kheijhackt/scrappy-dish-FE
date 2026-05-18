@@ -1,11 +1,12 @@
+import Button from "@/components/ui/Button";
 import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
+import { Trash } from "@tamagui/lucide-icons-2";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-  Button,
   Heading,
   Paragraph,
   ScrollView,
@@ -233,16 +234,11 @@ export default function DetailedRecipeScreen() {
 
             {/* Delete Action Button matching your exact accent configuration */}
             <Button
-              backgroundColor="$accentBackground"
-              marginTop="$4"
+              name="Delete"
               onPress={() => setShowDialog(true)}
-              hoverStyle={{ opacity: 0.9, scale: 0.98 }}
-              pressStyle={{ opacity: 0.8, scale: 0.95 }}
-            >
-              <SizableText fontWeight="700" color="$background">
-                Delete Recipe
-              </SizableText>
-            </Button>
+              variant="outline"
+              icon={<Trash />}
+            />
           </YStack>
         ) : (
           <></>

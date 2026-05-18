@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import Loading from "@/components/ui/Loading";
 import * as userEndpoints from "@/services/userEndpoints";
 import * as userPreferencesEndpoints from "@/services/userPreferencesEndpoints";
@@ -8,17 +9,18 @@ import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import {
   Accordion,
-  Button,
   Heading,
   Input,
   Paragraph,
   ScrollView,
   SizableText,
+  Button as TButton,
   XStack,
   YStack,
 } from "tamagui";
 
 import Dialog from "@/components/ui/Dialog";
+import { CircleX, Save, Settings } from "@tamagui/lucide-icons-2";
 
 export default function UserScreen() {
   const [user, setUser] = useState<User | null>(null);
@@ -152,17 +154,7 @@ export default function UserScreen() {
           </YStack>
 
           <XStack alignItems="center" gap="$3">
-            <Button
-              size="$3"
-              circular
-              borderWidth={1}
-              borderColor="$borderColor"
-              backgroundColor="$backgroundHover"
-              onPress={handleSettingsPress}
-              hoverStyle={{ scale: 0.95 }}
-            >
-              ⚙️
-            </Button>
+            <Button name="" onPress={handleSettingsPress} icon={<Settings />} />
 
             <YStack
               width={65}
@@ -255,7 +247,7 @@ export default function UserScreen() {
                         borderColor="$borderColor"
                         color="$color"
                       />
-                      <Button
+                      <TButton
                         size="$3"
                         height={44}
                         backgroundColor="$accentBackground"
@@ -264,7 +256,7 @@ export default function UserScreen() {
                         <SizableText fontWeight="700" color="$background">
                           +
                         </SizableText>
-                      </Button>
+                      </TButton>
                     </XStack>
 
                     {/* Content List */}
@@ -283,7 +275,7 @@ export default function UserScreen() {
                             {item}
                           </Paragraph>
 
-                          <Button
+                          <TButton
                             size="$2"
                             paddingHorizontal="$2"
                             chromeless
@@ -296,7 +288,7 @@ export default function UserScreen() {
                             >
                               -
                             </SizableText>
-                          </Button>
+                          </TButton>
                         </XStack>
                       ))}
 
@@ -323,29 +315,18 @@ export default function UserScreen() {
         <YStack gap="$2.5" marginTop="$2">
           {/* Main Action Button */}
           <Button
-            backgroundColor="$accentBackground"
+            name="Save Preferences"
             onPress={saveAllPreferences}
-            hoverStyle={{ opacity: 0.9, scale: 0.98 }}
-            pressStyle={{ opacity: 0.8, scale: 0.95 }}
-          >
-            <SizableText fontWeight="700" color="$background">
-              Save Preferences
-            </SizableText>
-          </Button>
+            icon={<Save />}
+          />
 
           {/* Outlined Discard Changes Button */}
           <Button
-            backgroundColor="transparent"
-            borderWidth={1}
-            borderColor="$borderColor"
+            name="Discard Changes"
             onPress={discardAllChanges}
-            hoverStyle={{ backgroundColor: "$backgroundHover", scale: 0.98 }}
-            pressStyle={{ opacity: 0.7, scale: 0.95 }}
-          >
-            <SizableText fontWeight="600" color="$color">
-              Discard Changes
-            </SizableText>
-          </Button>
+            icon={<CircleX />}
+            variant="outline"
+          />
         </YStack>
       </YStack>
     </ScrollView>

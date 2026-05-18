@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
 import RecipeAccordion from "@/components/ui/RecipeAccordion";
@@ -6,16 +7,17 @@ import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
 import { RecipeRequest } from "@/types/recipeRequest";
 import { logger } from "@/utils/logger";
+import { Settings, Sparkles } from "@tamagui/lucide-icons-2";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import {
   Accordion,
-  Button,
   Heading,
   Paragraph,
   ScrollView,
   Sheet,
   SizableText,
+  Button as TButton,
   TextArea,
   View,
   XStack,
@@ -119,13 +121,10 @@ export default function SuggestScreen() {
               No suggestions generated yet.
             </Paragraph>
             <Button
-              backgroundColor="$accentBackground"
               onPress={() => setIsSheetOpen(true)}
-            >
-              <SizableText fontWeight="700" color="$background">
-                Configure Parameters
-              </SizableText>
-            </Button>
+              name="Configure Preferences"
+              icon={<Settings />}
+            />
           </YStack>
         )}
       </YStack>
@@ -133,24 +132,10 @@ export default function SuggestScreen() {
       {/* Floating Action Config Entry Point */}
       {suggestedRecipes && (
         <Button
-          position="absolute"
-          bottom={24}
-          right={24}
-          width={56}
-          height={56}
-          borderRadius={28}
-          backgroundColor="$accentBackground"
-          elevation={5}
-          shadowColor="$borderColor"
           onPress={() => setIsSheetOpen(true)}
-          hoverStyle={{ scale: 1.05 }}
-          pressStyle={{ scale: 0.95 }}
-          zIndex={1000}
-        >
-          <SizableText size="$6" fontWeight="700" color="$background">
-            ✨
-          </SizableText>
-        </Button>
+          name=""
+          icon={<Sparkles />}
+        />
       )}
 
       {/* Slidable Variable Entry Configuration Frame */}
@@ -203,14 +188,14 @@ export default function SuggestScreen() {
                     </Paragraph>
                   </YStack>
                   <XStack gap="$3" alignItems="center">
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
                       onPress={() => adjustValue(cookTime, setCookTime, -5, 5)}
                     >
                       -
-                    </Button>
+                    </TButton>
                     <SizableText
                       size="$3"
                       fontWeight="700"
@@ -220,14 +205,14 @@ export default function SuggestScreen() {
                     >
                       {cookTime}m
                     </SizableText>
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
                       onPress={() => adjustValue(cookTime, setCookTime, 5, 5)}
                     >
                       +
-                    </Button>
+                    </TButton>
                   </XStack>
                 </XStack>
 
@@ -249,7 +234,7 @@ export default function SuggestScreen() {
                     </Paragraph>
                   </YStack>
                   <XStack gap="$3" alignItems="center">
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
@@ -258,7 +243,7 @@ export default function SuggestScreen() {
                       }
                     >
                       -
-                    </Button>
+                    </TButton>
                     <SizableText
                       size="$3"
                       fontWeight="700"
@@ -268,7 +253,7 @@ export default function SuggestScreen() {
                     >
                       {difficulty}
                     </SizableText>
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
@@ -277,7 +262,7 @@ export default function SuggestScreen() {
                       }
                     >
                       +
-                    </Button>
+                    </TButton>
                   </XStack>
                 </XStack>
 
@@ -299,14 +284,14 @@ export default function SuggestScreen() {
                     </Paragraph>
                   </YStack>
                   <XStack gap="$3" alignItems="center">
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
                       onPress={() => adjustValue(servings, setServings, -1, 1)}
                     >
                       -
-                    </Button>
+                    </TButton>
                     <SizableText
                       size="$3"
                       fontWeight="700"
@@ -316,14 +301,14 @@ export default function SuggestScreen() {
                     >
                       {servings}
                     </SizableText>
-                    <Button
+                    <TButton
                       size="$2"
                       circular
                       backgroundColor="$backgroundHover"
                       onPress={() => adjustValue(servings, setServings, 1, 1)}
                     >
                       +
-                    </Button>
+                    </TButton>
                   </XStack>
                 </XStack>
               </YStack>
@@ -346,15 +331,10 @@ export default function SuggestScreen() {
               </YStack>
 
               <Button
-                backgroundColor="$accentBackground"
-                marginTop="$2"
+                name="Generate Recipes"
                 onPress={suggestMultipleRecipes}
-                hoverStyle={{ opacity: 0.9 }}
-              >
-                <SizableText fontWeight="700" color="$background">
-                  Generate Recipes
-                </SizableText>
-              </Button>
+                icon={<Sparkles />}
+              />
             </YStack>
           </ScrollView>
         </Sheet.Frame>
