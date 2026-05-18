@@ -10,6 +10,7 @@ import { logger } from "@/utils/logger";
 import { Settings, Sparkles } from "@tamagui/lucide-icons-2";
 import { useState } from "react";
 import { FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Accordion,
   Heading,
@@ -84,50 +85,57 @@ export default function SuggestScreen() {
   return (
     <View backgroundColor="$background" flex={1} position="relative">
       {/* Primary Canvas Container */}
-      <YStack padding="$4" flex={1}>
-        <Loading isLoading={loading} />
-        <Dialog
-          isShowing={showDialog}
-          title="Notice"
-          description="Recipe saved!"
-          button1Name="Okay"
-          button1Callback={() => setShowDialog(false)}
-        />
+      <SafeAreaView>
+        <YStack padding="$4" flex={1}>
+          <Loading isLoading={loading} />
+          <Dialog
+            isShowing={showDialog}
+            title="Notice"
+            description="Recipe saved!"
+            button1Name="Okay"
+            button1Callback={() => setShowDialog(false)}
+          />
 
-        {suggestedRecipes ? (
-          <Accordion
-            type="multiple"
-            value={openRecipes}
-            onValueChange={setOpenRecipes}
-            width="100%"
-          >
-            <FlatList
-              data={suggestedRecipes}
-              keyExtractor={(_, index) => index.toString()}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 80 }}
-              renderItem={({ item: recipe, index }) => (
-                <RecipeAccordion
-                  recipe={recipe}
-                  index={index}
-                  onSave={saveRecipe}
-                />
-              )}
-            />
-          </Accordion>
-        ) : (
-          <YStack flex={1} justifyContent="center" alignItems="center" gap="$2">
-            <Paragraph size="$4" color="$color" opacity={0.5}>
-              No suggestions generated yet.
-            </Paragraph>
-            <Button
-              onPress={() => setIsSheetOpen(true)}
-              name="Configure Preferences"
-              icon={<Settings />}
-            />
-          </YStack>
-        )}
-      </YStack>
+          {suggestedRecipes ? (
+            <Accordion
+              type="multiple"
+              value={openRecipes}
+              onValueChange={setOpenRecipes}
+              width="100%"
+            >
+              <FlatList
+                data={suggestedRecipes}
+                keyExtractor={(_, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 80 }}
+                renderItem={({ item: recipe, index }) => (
+                  <RecipeAccordion
+                    recipe={recipe}
+                    index={index}
+                    onSave={saveRecipe}
+                  />
+                )}
+              />
+            </Accordion>
+          ) : (
+            <YStack
+              flex={1}
+              justifyContent="center"
+              alignItems="center"
+              gap="$2"
+            >
+              <Paragraph size="$4" color="$color" opacity={0.5}>
+                No suggestions generated yet.
+              </Paragraph>
+              <Button
+                onPress={() => setIsSheetOpen(true)}
+                name="Configure Preferences"
+                icon={<Settings />}
+              />
+            </YStack>
+          )}
+        </YStack>
+      </SafeAreaView>
 
       {/* Floating Action Config Entry Point */}
       {suggestedRecipes && (

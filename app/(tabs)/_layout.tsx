@@ -1,6 +1,5 @@
 import { CookingPot, Home, Sparkles, User } from "@tamagui/lucide-icons-2";
 import { Tabs } from "expo-router";
-import { Platform } from "react-native";
 import { useTheme, YStack } from "tamagui";
 
 export default function TabsLayout() {
@@ -15,8 +14,7 @@ export default function TabsLayout() {
           backgroundColor: theme?.background?.val,
           borderTopColor: theme?.borderColor?.val,
           borderTopWidth: 1,
-          height: Platform.OS === "ios" ? 88 : 68,
-          paddingBottom: Platform.OS === "ios" ? 28 : 12,
+
           paddingTop: 10,
         },
         // We handle the text color states dynamically below, so we override defaults here

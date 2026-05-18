@@ -5,6 +5,7 @@ import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
 import { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Accordion, Heading, ScrollView, YStack } from "tamagui";
 
 export default function HomeScreen() {
@@ -36,34 +37,45 @@ export default function HomeScreen() {
 
   return (
     <ScrollView backgroundColor="$background" flex={1}>
-      <YStack padding="$4" gap="$4" flex={1} justifyContent="center">
-        <Loading isLoading={loading} />
+      <SafeAreaView>
+        <YStack padding="$4" gap="$4" flex={1} justifyContent="center">
+          <Loading isLoading={loading} />
 
-        <Heading size="$7" textAlign="center" color="$color" marginBottom="$1">
-          Recipe You Might Like
-        </Heading>
+          <Heading
+            size="$7"
+            textAlign="center"
+            color="$color"
+            marginBottom="$1"
+          >
+            Recipe You Might Like
+          </Heading>
 
-        {recipe ? (
-          <>
-            <Accordion
-              type="multiple"
-              value={expandedItems}
-              onValueChange={setExpandedItems}
-            >
-              <RecipeAccordion recipe={recipe} index={0} onSave={saveRecipe} />
-            </Accordion>
-            <Dialog
-              isShowing={showDialog}
-              description="Recipe successfully saved."
-              button1Name="Okay"
-              button1Callback={() => setShowDialog(false)}
-              onClose={() => setShowDialog(false)} // Allows clicking outside to dismiss safely
-            />
-          </>
-        ) : (
-          <></>
-        )}
-      </YStack>
+          {recipe ? (
+            <>
+              <Accordion
+                type="multiple"
+                value={expandedItems}
+                onValueChange={setExpandedItems}
+              >
+                <RecipeAccordion
+                  recipe={recipe}
+                  index={0}
+                  onSave={saveRecipe}
+                />
+              </Accordion>
+              <Dialog
+                isShowing={showDialog}
+                description="Recipe successfully saved."
+                button1Name="Okay"
+                button1Callback={() => setShowDialog(false)}
+                onClose={() => setShowDialog(false)} // Allows clicking outside to dismiss safely
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </YStack>
+      </SafeAreaView>
     </ScrollView>
   );
 }

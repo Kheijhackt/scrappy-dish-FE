@@ -1,8 +1,10 @@
+import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Button,
   Heading,
@@ -11,8 +13,6 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-
-import Loading from "@/components/ui/Loading";
 
 export default function RecipesScreen() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
@@ -90,19 +90,21 @@ export default function RecipesScreen() {
       paddingHorizontal="$4"
       paddingTop="$4"
     >
-      <Loading isLoading={loading} />
-      <FlatList
-        data={recipes}
-        renderItem={(x) => (
-          <Item
-            id={x.item.id}
-            title={x.item.title}
-            description={x.item.description}
-          />
-        )}
-        keyExtractor={(_, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-      />
+      <SafeAreaView>
+        <Loading isLoading={loading} />
+        <FlatList
+          data={recipes}
+          renderItem={(x) => (
+            <Item
+              id={x.item.id}
+              title={x.item.title}
+              description={x.item.description}
+            />
+          )}
+          keyExtractor={(_, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+        />
+      </SafeAreaView>
     </YStack>
   );
 }
