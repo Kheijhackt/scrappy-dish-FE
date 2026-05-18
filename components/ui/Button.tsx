@@ -6,6 +6,7 @@ interface ButtonProps {
   onPress: () => void | Promise<void>;
   variant?: "primary" | "accent" | "outline";
   icon?: React.JSX.Element; // Accepts an instantiated JSX element like <Activity />
+  width?: string | number; // New prop to control the length (e.g., "100%", 120, "auto")
 }
 
 export default function Button({
@@ -13,6 +14,7 @@ export default function Button({
   onPress,
   variant = "primary",
   icon,
+  width,
 }: ButtonProps) {
   const isOutline = variant === "outline";
   const isAccent = variant === "accent";
@@ -35,6 +37,7 @@ export default function Button({
 
   return (
     <TamaguiButton
+      width={width} // Applies the custom length/width layout style dynamically
       borderWidth={1}
       borderColor={"$borderColor"}
       onPress={onPress}

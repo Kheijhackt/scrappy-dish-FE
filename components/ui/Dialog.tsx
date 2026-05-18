@@ -1,5 +1,7 @@
 import React from "react";
-import { AlertDialog, Button, XStack, YStack } from "tamagui";
+import { AlertDialog, XStack, YStack } from "tamagui";
+
+import Button from "./Button";
 
 interface DialogProps {
   isShowing: boolean;
@@ -74,20 +76,20 @@ export default function Dialog({
                 {button1Name && (
                   <AlertDialog.Cancel asChild>
                     <Button
-                      theme="outline"
-                      borderColor="$borderColor"
+                      name={button1Name}
                       onPress={button1Callback}
-                    >
-                      {button1Name}
-                    </Button>
+                      variant="outline"
+                    />
                   </AlertDialog.Cancel>
                 )}
 
                 {button2Name && (
                   <AlertDialog.Action asChild>
-                    <Button theme="accent" onPress={button2Callback}>
-                      {button2Name}
-                    </Button>
+                    <Button
+                      name={button2Name}
+                      onPress={button2Callback}
+                      variant="primary"
+                    />
                   </AlertDialog.Action>
                 )}
               </XStack>
