@@ -6,7 +6,7 @@ interface ButtonProps {
   onPress: () => void | Promise<void>;
   variant?: "primary" | "accent" | "outline";
   icon?: React.JSX.Element; // Accepts an instantiated JSX element like <Activity />
-  width?: string | number; // New prop to control the length (e.g., "100%", 120, "auto")
+  width?: string | number; // Controls length (e.g., "100%", 120, "auto")
 }
 
 export default function Button({
@@ -19,53 +19,60 @@ export default function Button({
   const isOutline = variant === "outline";
   const isAccent = variant === "accent";
 
-  // Compute the matching color token for both text and icon to guarantee contrast
+  // Compute colors for text/icon
   const contentColor = isOutline
     ? "$color"
     : isAccent
-      ? "$accent12" // Maps directly to your high-contrast accent text token
+      ? "$accent12"
       : "$background";
 
-  // Safely inject the theme token color directly into your custom JSX icon element
   const renderedIcon =
     icon && React.isValidElement(icon)
       ? React.cloneElement(icon as React.ReactElement<any>, {
           color: contentColor,
-          size: 18, // Sensible fallback size matching mobile UI standards
+          size: 18,
         })
       : null;
 
   return (
     <TamaguiButton
-      width={width} // Applies the custom length/width layout style dynamically
-      borderWidth={1}
-      borderColor={"$borderColor"}
+      width={width}
       onPress={onPress}
-      // Core Structural Layout
       height={52}
       borderRadius="$4"
       justifyContent="center"
       alignItems="center"
       paddingHorizontal="$4"
-      // Theme Adaptive Backgrounds
+      borderWidth={1}
+      borderColor={isOutline ? "$borderColor" : "transparent"}
+      // Default States
       backgroundColor={
         isOutline ? "transparent" : isAccent ? "$accent9" : "$color"
       }
-      // Micro-interactions
-      transition="quick"
+      // Essential for pressStyle to animate smoothly
+
+      // Interactive Styles
       pressStyle={{
-        scale: 0.98,
+        scale: 0.97,
         opacity: 0.9,
-        borderBottomWidth: 2,
+        // Darken background on press
+        backgroundColor: isOutline
+          ? "$backgroundHover"
+          : isAccent
+            ? "$accent10"
+            : "$colorPress",
       }}
       hoverStyle={{
-        opacity: 0.95,
+        cursor: "pointer",
+        backgroundColor: isOutline
+          ? "$backgroundHover"
+          : isAccent
+            ? "$accent10"
+            : "$colorHover",
       }}
     >
-      {/* Dynamic Content Wrapper alignment */}
       <XStack alignItems="center" justifyContent="center" gap="$2">
         {renderedIcon}
-
         <SizableText
           fontWeight="700"
           letterSpacing={0.5}
