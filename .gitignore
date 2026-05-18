@@ -40,5 +40,3 @@ app-example
 /android
 
 .env
-
-*.todo

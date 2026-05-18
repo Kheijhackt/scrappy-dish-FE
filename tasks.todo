@@ -1,0 +1,14 @@
+IMPLEMENTATIONS:
+  ✔ Make a custom icon button. @done (5/18/2026, 9:21:32 PM)
+  ☐ Implement the settings screen.
+  ☐ Add dark and light theme toggle with local storage saving. 
+
+ADJUSTMENTS:
+  ☐ On suggest screen, the configurations should be a modal sliding from below with a visible puller.
+  ☐ Add animation when toggling accordion.
+  ☐ Modify open button in recipes screen.
+  ☐ Make the title heading of the dialog smaller.
+  ☐ Improve the font style.
+
+BUGS:
+  ☐ The suggest screen initial display doesn't look appealing and not centered.
