@@ -18,10 +18,13 @@ import {
   YStack,
 } from "tamagui";
 
+import Dialog from "@/components/ui/Dialog";
+
 export default function UserScreen() {
   const [user, setUser] = useState<User | null>(null);
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
 
   // Fully controlled accordion state - empty array keeps everything closed by default
   const [openSections, setOpenSections] = useState<string[]>([]);
@@ -93,6 +96,7 @@ export default function UserScreen() {
       if (dynamicUpdate) setPreferences(dynamicUpdate);
     }
     setIsLoading(false);
+    setShowDialog(true);
   };
 
   // Discards local changes by pulling down the original server data again
@@ -129,6 +133,13 @@ export default function UserScreen() {
     <ScrollView backgroundColor="$background" flex={1}>
       <YStack padding="$4" gap="$5">
         <Loading isLoading={isLoading} />
+        <Dialog
+          isShowing={showDialog}
+          title="Notice"
+          description="Your preferences have been saved."
+          button1Name="Okay"
+          button1Callback={() => setShowDialog(false)}
+        />
         {/* Upper Profile Layout Section */}
         <XStack justifyContent="space-between" alignItems="center" width="100%">
           <YStack gap="$1" flex={1}>

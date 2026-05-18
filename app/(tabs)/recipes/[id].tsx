@@ -1,3 +1,5 @@
+import Dialog from "@/components/ui/Dialog";
+import Loading from "@/components/ui/Loading";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import { Recipe } from "@/types/recipe";
 import { router, useLocalSearchParams } from "expo-router";
@@ -18,6 +20,7 @@ export default function DetailedRecipeScreen() {
   const recipeId = Number(id);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     const loadRecipe = async () => {
@@ -32,18 +35,28 @@ export default function DetailedRecipeScreen() {
   }, [recipeId]);
 
   const deleteRecipe = async (id: number) => {
+    setShowDialog(false);
     setLoading(true);
     const response = await recipeEndpoints.deleteRecipe(id);
     if (response) {
       router.back();
     }
-
     setLoading(false);
   };
 
   return (
     <ScrollView backgroundColor="$background" flex={1}>
       <YStack padding="$4" gap="$4">
+        <Loading isLoading={loading} />
+        <Dialog
+          isShowing={showDialog}
+          title="Delete Recipe"
+          description="Are you sure you want to delete this recipe?"
+          button1Name="Cancel"
+          button1Callback={() => setShowDialog(false)}
+          button2Name="Delete"
+          button2Callback={() => deleteRecipe(recipeId)}
+        />
         {recipe ? (
           <YStack gap="$4">
             {/* Header Section */}
@@ -222,7 +235,7 @@ export default function DetailedRecipeScreen() {
             <Button
               backgroundColor="$accentBackground"
               marginTop="$4"
-              onPress={() => deleteRecipe(recipeId)}
+              onPress={() => setShowDialog(true)}
               hoverStyle={{ opacity: 0.9, scale: 0.98 }}
               pressStyle={{ opacity: 0.8, scale: 0.95 }}
             >
@@ -232,15 +245,7 @@ export default function DetailedRecipeScreen() {
             </Button>
           </YStack>
         ) : (
-          <Paragraph
-            size="$4"
-            textAlign="center"
-            color="$color"
-            opacity={0.4}
-            marginTop="$8"
-          >
-            Loading recipe details...
-          </Paragraph>
+          <></>
         )}
       </YStack>
     </ScrollView>

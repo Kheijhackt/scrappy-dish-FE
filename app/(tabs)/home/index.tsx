@@ -1,5 +1,6 @@
+import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
-import RecipeAccordion from "@/components/ui/RecipeAccordion"; // Adjust path if needed
+import RecipeAccordion from "@/components/ui/RecipeAccordion";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
 import * as suggestEndpoints from "@/services/suggestEndpoints";
 import { Recipe } from "@/types/recipe";
@@ -9,6 +10,7 @@ import { Accordion, Heading, ScrollView, YStack } from "tamagui";
 export default function HomeScreen() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
 
   // Track which accordion item is open. "recipe-0" targets our single item index fallback.
   const [expandedItems, setExpandedItems] = useState<string[]>(["recipe-0"]);
@@ -29,6 +31,7 @@ export default function HomeScreen() {
       await recipeEndpoints.saveRecipe(recipe);
     }
     setLoading(false);
+    setShowDialog(true);
   };
 
   return (
@@ -41,19 +44,25 @@ export default function HomeScreen() {
         </Heading>
 
         {recipe ? (
-          /* 
-            Tamagui Accordion Root Wrapper
-            - type="multiple" or "single" allows control handling
-            - value & onValueChange controls state sync
-          */
-          <Accordion
-            type="multiple"
-            value={expandedItems}
-            onValueChange={setExpandedItems}
-          >
-            <RecipeAccordion recipe={recipe} index={0} onSave={saveRecipe} />
-          </Accordion>
-        ) : null}
+          <>
+            <Accordion
+              type="multiple"
+              value={expandedItems}
+              onValueChange={setExpandedItems}
+            >
+              <RecipeAccordion recipe={recipe} index={0} onSave={saveRecipe} />
+            </Accordion>
+            <Dialog
+              isShowing={showDialog}
+              description="Recipe successfully saved."
+              button1Name="Okay"
+              button1Callback={() => setShowDialog(false)}
+              onClose={() => setShowDialog(false)} // Allows clicking outside to dismiss safely
+            />
+          </>
+        ) : (
+          <></>
+        )}
       </YStack>
     </ScrollView>
   );

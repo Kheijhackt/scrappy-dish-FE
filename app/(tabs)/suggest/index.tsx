@@ -1,3 +1,4 @@
+import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
 import RecipeAccordion from "@/components/ui/RecipeAccordion";
 import * as recipeEndpoints from "@/services/recipeEndpoints";
@@ -27,6 +28,7 @@ export default function SuggestScreen() {
   );
   const [isSheetOpen, setIsSheetOpen] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   // Accordion open/close state tracking
   const [openRecipes, setOpenRecipes] = useState<string[]>([]);
@@ -63,6 +65,7 @@ export default function SuggestScreen() {
     setLoading(true);
     await recipeEndpoints.saveRecipe(recipe);
     setLoading(false);
+    setShowDialog(true);
   };
 
   // Clamps adjustable parameters between a safe lower and optional upper boundary
@@ -81,6 +84,13 @@ export default function SuggestScreen() {
       {/* Primary Canvas Container */}
       <YStack padding="$4" flex={1}>
         <Loading isLoading={loading} />
+        <Dialog
+          isShowing={showDialog}
+          title="Notice"
+          description="Recipe saved!"
+          button1Name="Okay"
+          button1Callback={() => setShowDialog(false)}
+        />
 
         {suggestedRecipes ? (
           <Accordion
