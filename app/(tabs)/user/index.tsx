@@ -1,4 +1,5 @@
 import Button from "@/components/ui/Button";
+import ButtonIcon from "@/components/ui/ButtonIcon";
 import Dialog from "@/components/ui/Dialog";
 import Loading from "@/components/ui/Loading";
 import * as userEndpoints from "@/services/userEndpoints";
@@ -159,11 +160,7 @@ export default function UserScreen() {
             </YStack>
 
             <XStack alignItems="center" gap="$3">
-              <Button
-                name=""
-                onPress={handleSettingsPress}
-                icon={<Settings />}
-              />
+              <ButtonIcon icon={<Settings />} onPress={handleSettingsPress} />
 
               <YStack
                 width={65}
